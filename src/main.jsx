@@ -1,6 +1,10 @@
 import * as React from "react";
 import * as ReactDOM from "react-dom/client";
-import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import {
+  createBrowserRouter,
+  RouterProvider,
+  redirect,
+} from "react-router-dom";
 import "./index.css";
 import ErrorPage from "./error-page";
 import Root, {
@@ -33,29 +37,28 @@ const router = createBrowserRouter([
         path: "contacts/new",
         element: <div>New</div>,
         loader: async ({ params, request }) => {
-          rootAction();
-          rootLoader();
+          await rootAction();
           console.log("New");
-          return null;
+          await rootLoader();
+          return redirect("/");
         },
       },
       {
         path: "contacts/clear",
         element: <div>clear</div>,
         loader: async ({ params, request }) => {
-          clearAll();
-          rootLoader();
+          await clearAll();
           console.log("clear");
           return null;
         },
       },
       {
         path: "contacts/1",
-        element: <div>contacts/1- Your Name</div>,
+        element: <div>contacts/1 - Your Name</div>,
       },
       {
         path: "contacts/2",
-        element: <div>contacts/2- Your Friend</div>,
+        element: <div>contacts/2 - Your Friend</div>,
       },
       {
         path: "contacts/:contactId",
@@ -71,14 +74,3 @@ ReactDOM.createRoot(document.getElementById("root")).render(
     <RouterProvider router={router} />
   </React.StrictMode>
 );
-
-// import { StrictMode } from 'react'
-// import { createRoot } from 'react-dom/client'
-// import './index.css'
-// import App from './App.jsx'
-
-// createRoot(document.getElementById('root')).render(
-//   <StrictMode>
-//     <App />
-//   </StrictMode>,
-// )

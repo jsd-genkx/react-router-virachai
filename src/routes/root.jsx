@@ -2,13 +2,6 @@ import { Outlet, Link, useLoaderData, Form } from "react-router-dom";
 import { getContacts, createContact, deleteContactAll } from "../contacts";
 
 export async function action() {
-  try {
-    await createContact();
-    // Handle successful creation (e.g., display success message, update UI)
-  } catch (error) {
-    console.error(error);
-    // Handle creation error (e.g., display error message)
-  }
   const contact = await createContact();
   console.log("createContact");
   return { contact };
