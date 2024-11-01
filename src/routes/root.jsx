@@ -8,14 +8,9 @@ export async function action() {
 }
 
 export async function clear() {
-  try {
-    await deleteContactAll();
-    // Handle successful creation (e.g., display success message, update UI)
-  } catch (error) {
-    console.error(error);
-    // Handle creation error (e.g., display error message)
-  }
-  const contacts = await getContacts();
+  const contacts = await deleteContactAll();
+  if (contacts.length) contacts = await deleteContactAll();
+  if (contacts.length) contacts = await deleteContactAll();
   console.log("deleteContactAll");
   return { contacts };
 }
@@ -25,32 +20,6 @@ export async function loader() {
   console.log("rootLoader");
   return { contacts };
 }
-
-// const handleSubmit = async (event) => {
-//   event.preventDefault(); // Prevent default form submission
-
-//   try {
-//     await action();
-//     await loader();
-//     // Handle successful creation (e.g., display success message, update UI)
-//   } catch (error) {
-//     console.error(error);
-//     // Handle creation error (e.g., display error message)
-//   }
-// };
-
-const handleReset = async (event) => {
-  event.preventDefault(); // Prevent default form submission
-
-  try {
-    await deleteContactAll();
-    await loader();
-    // Handle successful creation (e.g., display success message, update UI)
-  } catch (error) {
-    console.error(error);
-    // Handle creation error (e.g., display error message)
-  }
-};
 
 export default function Root() {
   const { contacts } = useLoaderData();
@@ -80,16 +49,6 @@ export default function Root() {
               <Link to={`contacts/clear`}>CLEAR</Link>
             </button>
           </Form>
-          {/* <Form method="post">
-            <button type="button" onClick={handleSubmit}>
-              NEW
-            </button>
-          </Form> */}
-          {/* <Form method="post">
-            <button type="button" onClick={handleReset}>
-              RESET
-            </button>
-          </Form> */}
         </div>
         <nav>
           <ul>

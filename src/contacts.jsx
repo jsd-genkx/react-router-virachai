@@ -55,7 +55,8 @@ export async function updateContact(id, updates) {
 
 export async function deleteContactAll() {
   await set([]);
-  return true;
+  let contacts = await localforage.getItem("contacts");
+  return contacts;
 }
 
 export async function deleteContact(id) {
