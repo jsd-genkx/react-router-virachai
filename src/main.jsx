@@ -49,7 +49,8 @@ const router = createBrowserRouter([
         loader: async ({ params, request }) => {
           await clearAll();
           console.log("clear");
-          return null;
+          await rootLoader();
+          return redirect("/");
         },
       },
       {
