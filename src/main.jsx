@@ -9,6 +9,7 @@ import Root, {
   // clear as clearAction,
 } from "./routes/root";
 import Contact, { loader as contactLoader } from "./routes/contact";
+import { deleteContactAll as clearAction } from "./contacts";
 
 const router = createBrowserRouter([
   {
@@ -32,6 +33,7 @@ const router = createBrowserRouter([
       {
         path: "contacts/new",
         element: <div>New</div>,
+        // action: deleteContactAll,
       },
       {
         path: "contacts/clear",
