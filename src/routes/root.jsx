@@ -4,34 +4,32 @@ import { getContacts, createContact, deleteContactAll } from "../contacts";
 export async function action() {
   try {
     await createContact();
-    await loader();
     // Handle successful creation (e.g., display success message, update UI)
   } catch (error) {
     console.error(error);
     // Handle creation error (e.g., display error message)
   }
   const contact = await createContact();
-  console.log(contact);
+  console.log("createContact");
   return { contact };
 }
 
 export async function clear() {
   try {
     await deleteContactAll();
-    await loader();
     // Handle successful creation (e.g., display success message, update UI)
   } catch (error) {
     console.error(error);
     // Handle creation error (e.g., display error message)
   }
   const contacts = await getContacts();
-  console.log(contacts);
+  console.log("deleteContactAll");
   return { contacts };
 }
 
 export async function loader() {
   const contacts = await getContacts();
-  console.log(contacts);
+  console.log("rootLoader");
   return { contacts };
 }
 

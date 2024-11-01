@@ -4,12 +4,11 @@ import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import "./index.css";
 import ErrorPage from "./error-page";
 import Root, {
+  action as rootAction,
   loader as rootLoader,
-  // action as rootAction,
-  // clear as clearAction,
+  clear as clearAll,
 } from "./routes/root";
 import Contact, { loader as contactLoader } from "./routes/contact";
-import { deleteContactAll } from "./contacts";
 
 const router = createBrowserRouter([
   {
@@ -33,11 +32,22 @@ const router = createBrowserRouter([
       {
         path: "contacts/new",
         element: <div>New</div>,
-        // action: deleteContactAll,
+        loader: async ({ params, request }) => {
+          rootAction();
+          rootLoader();
+          console.log("New");
+          return null;
+        },
       },
       {
         path: "contacts/clear",
         element: <div>clear</div>,
+        loader: async ({ params, request }) => {
+          clearAll();
+          rootLoader();
+          console.log("clear");
+          return null;
+        },
       },
       {
         path: "contacts/1",
