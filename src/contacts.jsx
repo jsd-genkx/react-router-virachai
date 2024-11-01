@@ -6,6 +6,20 @@ export async function getContacts(query) {
   await fakeNetwork(`getContacts:${query}`);
   let contacts = await localforage.getItem("contacts");
   if (!contacts) contacts = [];
+  const contact = {
+    id: "virachai",
+    first: "Virachai",
+    last: "Wongsena",
+    avatar: "https://virachai.github.io/profile-virachai.jpg",
+    twitter: "wvirachai",
+    notes: "JSD#8",
+    favorite: true,
+    createdAt: Date.now(),
+  };
+  if (contacts.length == 0) {
+    contacts.unshift(contact);
+    await set(contacts);
+  }
   if (query) {
     contacts = matchSorter(contacts, query, { keys: ["first", "last"] });
   }
@@ -37,6 +51,11 @@ export async function updateContact(id, updates) {
   Object.assign(contact, updates);
   await set(contacts);
   return contact;
+}
+
+export async function deleteContactAll() {
+  await set([]);
+  return true;
 }
 
 export async function deleteContact(id) {

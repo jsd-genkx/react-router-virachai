@@ -1,28 +1,54 @@
 import * as React from "react";
 import * as ReactDOM from "react-dom/client";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
-// import App from "./App.jsx";
 import "./index.css";
-import Root from "./routes/root";
 import ErrorPage from "./error-page";
-import Contact from "./routes/contact";
-
-// const router = createBrowserRouter([
-//   {
-//     path: "/",
-//     element: <div>Hello world!</div>,
-//   },
-// ]);
+import Root, {
+  loader as rootLoader,
+  // action as rootAction,
+  // clear as clearAction,
+} from "./routes/root";
+import Contact, { loader as contactLoader } from "./routes/contact";
 
 const router = createBrowserRouter([
   {
     path: "/",
     element: <Root />,
+    loader: rootLoader,
     errorElement: <ErrorPage />,
     children: [
       {
+        path: "/",
+        element: <div>Hello world!</div>,
+      },
+      {
+        path: "projects",
+        element: <div>Projects</div>,
+      },
+      {
+        path: "contacts",
+        element: <div>Click Menu!</div>,
+      },
+      {
+        path: "contacts/new",
+        element: <div>New</div>,
+      },
+      {
+        path: "contacts/clear",
+        element: <div>clear</div>,
+      },
+      {
+        path: "contacts/1",
+        element: <div>contacts/1- Your Name</div>,
+      },
+      {
+        path: "contacts/2",
+        element: <div>contacts/2- Your Friend</div>,
+      },
+      {
         path: "contacts/:contactId",
         element: <Contact />,
+        loader: contactLoader,
       },
     ],
   },
