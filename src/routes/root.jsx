@@ -4,6 +4,7 @@ import { getContacts, createContact, deleteContactAll } from "../contacts";
 export async function action() {
   const contact = await createContact();
   console.log("createContact");
+  const contacts = await getContacts();
   return { contact };
 }
 
