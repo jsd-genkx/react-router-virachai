@@ -1,10 +1,10 @@
 import * as React from "react";
 import * as ReactDOM from "react-dom/client";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
+// import App from "./App.jsx";
 import "./index.css";
 import Root from "./routes/root";
 import ErrorPage from "./error-page";
-// import ContactPage from "./contacts";
 import Contact from "./routes/contact";
 
 // const router = createBrowserRouter([
@@ -19,10 +19,12 @@ const router = createBrowserRouter([
     path: "/",
     element: <Root />,
     errorElement: <ErrorPage />,
-  },
-  {
-    path: "contacts/:contactId",
-    element: <Contact />,
+    children: [
+      {
+        path: "contacts/:contactId",
+        element: <Contact />,
+      },
+    ],
   },
 ]);
 
