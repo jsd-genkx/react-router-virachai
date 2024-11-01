@@ -5,7 +5,7 @@ export default function Contact() {
     first: "Virachai",
     last: "Wongsena",
     avatar: "https://robohash.org/you.png?size=200x200",
-    twitter: "your_handle",
+    twitter: "wvirachai",
     notes: "Some notes",
     favorite: true,
   };

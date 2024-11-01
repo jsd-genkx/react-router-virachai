@@ -1,6 +1,13 @@
-import { Outlet } from "react-router-dom";
+import { Outlet, Link, useLoaderData } from "react-router-dom";
+import { getContacts } from "../contacts";
+
+export async function loader() {
+  const contacts = await getContacts();
+  return { contacts };
+}
 
 export default function Root() {
+  // const { contacts } = useLoaderData();
   return (
     <>
       <div id="sidebar">
@@ -24,13 +31,13 @@ export default function Root() {
         <nav>
           <ul>
             <li>
-              <a href={`/`}>[Home]</a>
+              <Link to={`/`}>HOME</Link>
             </li>
             <li>
-              <a href={`/contacts/1`}>Your Name</a>
+              <Link to={`contacts/1`}>- Your Name</Link>
             </li>
             <li>
-              <a href={`/contacts/2`}>Your Friend</a>
+              <Link to={`contacts/2`}>- Your Friend</Link>
             </li>
           </ul>
         </nav>
