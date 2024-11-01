@@ -9,7 +9,7 @@ import Root, {
   // clear as clearAction,
 } from "./routes/root";
 import Contact, { loader as contactLoader } from "./routes/contact";
-import { deleteContactAll as clearAction } from "./contacts";
+import { deleteContactAll } from "./contacts";
 
 const router = createBrowserRouter([
   {

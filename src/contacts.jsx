@@ -3,7 +3,7 @@ import { matchSorter } from "match-sorter";
 import sortBy from "sort-by";
 
 export async function getContacts(query) {
-  await fakeNetwork(`getContacts:${query}`);
+  // await fakeNetwork(`getContacts:${query}`);
   let contacts = await localforage.getItem("contacts");
   if (!contacts) contacts = [];
   const contact = {
@@ -55,6 +55,8 @@ export async function updateContact(id, updates) {
 
 export async function deleteContactAll() {
   await set([]);
+  let contacts = await localforage.getItem("contacts");
+  console.log(contacts);
   return true;
 }
 

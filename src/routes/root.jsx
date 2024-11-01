@@ -31,6 +31,7 @@ export async function clear() {
 
 export async function loader() {
   const contacts = await getContacts();
+  console.log(contacts);
   return { contacts };
 }
 
