@@ -7,12 +7,14 @@ import {
 } from "react-router-dom";
 import "./index.css";
 import ErrorPage from "./error-page";
-import Root, {
-  action as rootAction,
-  loader as rootLoader,
-  clear as clearAll,
-} from "./routes/root";
-import Contact, { loader as contactLoader } from "./routes/contact";
+import Root from "./routes/root";
+import Contact from "./routes/contact";
+import {
+  getContacts as getFt,
+  deleteContactAll as clearFt,
+  createContact as newFt,
+} from "./contacts";
+import { loader as rootLoader } from "./routes/lib/loader.jsx";
 
 const router = createBrowserRouter([
   {
@@ -37,20 +39,20 @@ const router = createBrowserRouter([
         path: "contacts/new",
         element: <div>New</div>,
         loader: async ({ params, request }) => {
-          await rootAction();
+          await newFt();
           console.log("New");
-          await rootLoader();
-          return redirect("/");
+          await getFt();
+          if (params || request) return redirect("/");
         },
       },
       {
         path: "contacts/clear",
         element: <div>clear</div>,
         loader: async ({ params, request }) => {
-          await clearAll();
+          await clearFt();
           console.log("clear");
-          await rootLoader();
-          return redirect("/");
+          await getFt();
+          if (params || request) return redirect("/");
         },
       },
       {
@@ -64,7 +66,7 @@ const router = createBrowserRouter([
       {
         path: "contacts/:contactId",
         element: <Contact />,
-        loader: contactLoader,
+        // loader: contactLoader,
       },
     ],
   },

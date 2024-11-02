@@ -29,7 +29,7 @@ export async function getContacts(query) {
 export async function createContact() {
   await fakeNetwork();
   let id = Math.random().toString(36).substring(2, 9);
-  let contact = { id, createdAt: Date.now() };
+  let contact = { id, createdAt: Date.now(), favorite: false };
   let contacts = await getContacts();
   contacts.unshift(contact);
   await set(contacts);
@@ -87,6 +87,6 @@ async function fakeNetwork(key) {
   }
   fakeCache[key] = true;
   return new Promise((res) => {
-    setTimeout(res, Math.random() * 800);
+    setTimeout(res, Math.random() * 1000);
   });
 }

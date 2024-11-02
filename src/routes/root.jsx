@@ -1,26 +1,4 @@
 import { Outlet, Link, useLoaderData, Form } from "react-router-dom";
-import { getContacts, createContact, deleteContactAll } from "../contacts";
-
-export async function action() {
-  const contact = await createContact();
-  console.log("createContact");
-  const contacts = await getContacts();
-  return { contact };
-}
-
-export async function clear() {
-  const contacts = await deleteContactAll();
-  if (contacts.length) contacts = await deleteContactAll();
-  if (contacts.length) contacts = await deleteContactAll();
-  console.log("deleteContactAll");
-  return { contacts };
-}
-
-export async function loader() {
-  const contacts = await getContacts();
-  console.log("rootLoader");
-  return { contacts };
-}
 
 export default function Root() {
   const { contacts } = useLoaderData();

@@ -1,13 +1,21 @@
 import { Form, useLoaderData } from "react-router-dom";
-import { getContact } from "../contacts";
+import PropTypes from "prop-types";
 
-export async function loader({ params }) {
-  const contact = await getContact(params.contactId);
-  return { contact };
-}
+Favorite.propTypes = {
+  favorite: PropTypes.bool.isRequired,
+};
 
 export default function Contact() {
-  const { contact } = useLoaderData();
+  let { contact } = useLoaderData();
+  if (!contact)
+    contact = {
+      first: "Your",
+      last: "Name",
+      avatar: "https://robohash.org/you.png?size=200x200",
+      twitter: "your_handle",
+      notes: "Some notes",
+      favorite: true,
+    };
   return (
     <div id="contact">
       <div>
@@ -29,7 +37,7 @@ export default function Contact() {
           ) : (
             <i>No Name</i>
           )}{" "}
-          <Favorite contact={contact} />
+          <Favorite favorite={contact && contact.favorite} />
         </h1>
 
         {contact.twitter && (
@@ -63,8 +71,10 @@ export default function Contact() {
   );
 }
 
-function Favorite({ contact }) {
-  const favorite = contact.favorite;
+function Favorite({ favorite }) {
+  if (!favorite) return <></>;
+  // if (!contact || !contact.favorite) return <></>;
+  // const favorite = contact.favorite;
   return (
     <Form method="post">
       <button
