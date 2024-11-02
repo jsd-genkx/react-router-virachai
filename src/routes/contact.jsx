@@ -1,5 +1,11 @@
 import { Form, useLoaderData } from "react-router-dom";
 import PropTypes from "prop-types";
+import { getContact } from "../contacts";
+
+export async function loader({ params }) {
+  const contact = await getContact(params.contactId);
+  return { contact };
+}
 
 Favorite.propTypes = {
   favorite: PropTypes.bool.isRequired,
@@ -7,15 +13,15 @@ Favorite.propTypes = {
 
 export default function Contact() {
   let { contact } = useLoaderData();
-  if (!contact)
-    contact = {
-      first: "Your",
-      last: "Name",
-      avatar: "https://robohash.org/you.png?size=200x200",
-      twitter: "your_handle",
-      notes: "Some notes",
-      favorite: true,
-    };
+  // if (!contact)
+  //   contact = {
+  //     first: "Your",
+  //     last: "Name",
+  //     avatar: "https://robohash.org/you.png?size=200x200",
+  //     twitter: "your_handle",
+  //     notes: "Some notes",
+  //     favorite: true,
+  //   };
   return (
     <div id="contact">
       <div>
