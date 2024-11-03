@@ -3,6 +3,7 @@ import PropTypes from "prop-types";
 import { getContact } from "../contacts";
 
 export async function loader({ params }) {
+  if (!params) return null;
   const contact = await getContact(params.contactId);
   return { contact };
 }

@@ -7,12 +7,16 @@ import {
 } from "react-router-dom";
 import "./index.css";
 import ErrorPage from "./error-page";
-import Root, { loader as rootLoader } from "./routes/root";
+import Root, {
+  loader as rootLoader,
+  action as rootAction,
+} from "./routes/root";
 import Contact, { loader as contactLoader } from "./routes/contact";
 import {
   deleteContactAll as clearFt,
-  createContact as newFt,
+  // createContact as newFt,
 } from "./contacts";
+// import { getContacts } from "./contacts";
 
 const router = createBrowserRouter([
   {
@@ -26,24 +30,13 @@ const router = createBrowserRouter([
         element: <div>Hello world!</div>,
       },
       {
-        path: "projects",
-        element: <div>Projects</div>,
-      },
-      {
         path: "contacts",
         element: <div>Click Menu!</div>,
       },
       {
         path: "contacts/new",
         element: <div>New</div>,
-        loader: async ({ params, request }) => {
-          await newFt();
-          console.log("New");
-          await rootLoader();
-          await rootLoader();
-          await rootLoader();
-          if (params || request) return redirect("/");
-        },
+        loader: rootAction,
       },
       {
         path: "contacts/clear",
@@ -51,9 +44,6 @@ const router = createBrowserRouter([
         loader: async ({ params, request }) => {
           await clearFt();
           console.log("clear");
-          await rootLoader();
-          await rootLoader();
-          await rootLoader();
           if (params || request) return redirect("/");
         },
       },
@@ -64,6 +54,14 @@ const router = createBrowserRouter([
       {
         path: "contacts/2",
         element: <div>contacts/2 - Your Friend</div>,
+      },
+      {
+        path: "contacts/1",
+        element: <div>contacts/1 - Your Name</div>,
+      },
+      {
+        path: "contacts/3",
+        element: <div>contacts/2 - reactrouter</div>,
       },
       {
         path: "contacts/:contactId",

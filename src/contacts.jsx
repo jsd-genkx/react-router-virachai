@@ -4,6 +4,7 @@ import sortBy from "sort-by";
 
 export async function getContacts(query) {
   await fakeNetwork(`getContacts:${query}`);
+  await fakeNetwork(`getContacts:${query}`);
   let contacts = await localforage.getItem("contacts");
   if (!contacts) contacts = [];
   const contact = {
@@ -28,6 +29,7 @@ export async function getContacts(query) {
 
 export async function createContact() {
   await fakeNetwork();
+  await fakeNetwork();
   let id = Math.random().toString(36).substring(2, 9);
   let contact = { id, createdAt: Date.now(), favorite: false };
   let contacts = await getContacts();
@@ -38,12 +40,14 @@ export async function createContact() {
 
 export async function getContact(id) {
   await fakeNetwork(`contact:${id}`);
+  await fakeNetwork(`contact:${id}`);
   let contacts = await localforage.getItem("contacts");
   let contact = contacts.find((contact) => contact.id === id);
   return contact ?? null;
 }
 
 export async function updateContact(id, updates) {
+  await fakeNetwork();
   await fakeNetwork();
   let contacts = await localforage.getItem("contacts");
   let contact = contacts.find((contact) => contact.id === id);
@@ -54,12 +58,16 @@ export async function updateContact(id, updates) {
 }
 
 export async function deleteContactAll() {
+  await fakeNetwork();
+  await fakeNetwork();
   await set([]);
   let contacts = await localforage.getItem("contacts");
   return contacts;
 }
 
 export async function deleteContact(id) {
+  await fakeNetwork();
+  await fakeNetwork();
   let contacts = await localforage.getItem("contacts");
   let index = contacts.findIndex((contact) => contact.id === id);
   if (index > -1) {

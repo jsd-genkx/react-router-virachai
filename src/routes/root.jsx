@@ -1,12 +1,19 @@
-import { Outlet, Link, useLoaderData, Form } from "react-router-dom";
-import { getContacts } from "../contacts";
+import {
+  Outlet,
+  Link,
+  useLoaderData,
+  Form,
+  redirect,
+} from "react-router-dom";
+import { Suspense } from "react";
+import { getContacts, createContact } from "../contacts";
 
-// export async function action() {
-//   const contact = await createContact();
-//   console.log("createContact");
-//   wait getContacts();
-//   return { contact };
-// }
+export async function action() {
+  const contact = await createContact();
+  console.log("createContact");
+  if (contact) return redirect("/");
+  return { contact };
+}
 
 // export async function clear() {
 //   const contacts = await deleteContactAll();
@@ -17,13 +24,28 @@ import { getContacts } from "../contacts";
 // }
 
 export async function loader() {
-  const contacts = await getContacts();
-  console.log("rootLoader");
+  let contacts = await getContacts();
+  console.log("root rootLoader", contacts);
   return { contacts };
 }
 
 export default function Root() {
-  const { contacts } = useLoaderData();
+  let data = useLoaderData();
+  if (!data) return redirect("/");
+  // if (!data)
+  //   data = [
+  //     {
+  //       id: "virachai",
+  //       first: "Virachai",
+  //       last: "Wongsena",
+  //       avatar: "https://virachai.github.io/profile-virachai.jpg",
+  //       twitter: "wvirachai",
+  //       notes: "JSD#8",
+  //       favorite: true,
+  //       createdAt: Date.now(),
+  //     },
+  //   ];
+  const { contacts } = data;
   return (
     <>
       <div id="sidebar">
@@ -62,6 +84,11 @@ export default function Root() {
             <li key="friend">
               <Link to={`contacts/2`}>Your Friend</Link>
             </li>
+            {/* <li key="random">
+              <Link to={`contacts/3`}>
+                {Math.random().toString(36).substring(2, 9)}
+              </Link>
+            </li> */}
           </ul>
           <hr />
           <br />
@@ -90,7 +117,9 @@ export default function Root() {
         </nav>
       </div>
       <div id="detail">
-        <Outlet />
+        <Suspense fallback={<div>loading...</div>}>
+          <Outlet />
+        </Suspense>
       </div>
     </>
   );
