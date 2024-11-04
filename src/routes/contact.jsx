@@ -14,6 +14,7 @@ Favorite.propTypes = {
 
 export default function Contact() {
   const { contact } = useLoaderData();
+  if (!contact) return <></>;
   return (
     <div id="contact">
       <div>
