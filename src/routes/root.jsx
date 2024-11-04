@@ -95,6 +95,9 @@ export default function Root() {
             <li key="friend">
               <Link to={`contacts/2`}>Your Friend</Link>
             </li>
+            <li key="no-context">
+              <Link to={`no-context`}>No Context</Link>
+            </li>
             {/* <li key="random">
               <Link to={`contacts/3`}>
                 {Math.random().toString(36).substring(2, 9)}

@@ -13,6 +13,7 @@ import Root, {
   clear as rootClear,
 } from "./routes/root";
 import Contact, { loader as contactLoader } from "./routes/contact";
+import NoContext from "./routes/no-context";
 // import {
 //   deleteContactAll as clearFt,
 //   createContact as newFt,
@@ -33,6 +34,10 @@ const router = createBrowserRouter([
     errorElement: <ErrorPage />,
     loader: rootLoader,
     children: [
+      {
+        path: "/no-context",
+        element: <NoContext />,
+      },
       {
         path: "/",
         element: <div>Hello world!</div>,
