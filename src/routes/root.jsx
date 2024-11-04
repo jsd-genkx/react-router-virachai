@@ -1,51 +1,42 @@
-import {
-  Outlet,
-  Link,
-  useLoaderData,
-  Form,
-  redirect,
-} from "react-router-dom";
+import { Outlet, Link, useLoaderData, Form } from "react-router-dom";
 import { Suspense } from "react";
-import { getContacts, createContact } from "../contacts";
+import { getContacts, createContact, deleteContactAll } from "../contacts";
+import { useNavigate } from "react-router-dom";
+import { useLocation } from "react-router-dom";
+import { useEffect } from "react";
+// import { useEffect, useState } from "react";
+import { redirect } from "react-router-dom";
 
 export async function action() {
   const contact = await createContact();
-  console.log("createContact");
-  if (contact) return redirect("/");
+  console.log("root createContact", contact);
   return { contact };
 }
 
-// export async function clear() {
-//   const contacts = await deleteContactAll();
-//   if (contacts.length) contacts = await deleteContactAll();
-//   if (contacts.length) contacts = await deleteContactAll();
-//   console.log("deleteContactAll");
-//   return { contacts };
-// }
+export async function clear() {
+  const contacts = await deleteContactAll();
+  console.log("root deleteContactAll", contacts);
+  return { contacts };
+}
 
 export async function loader() {
   let contacts = await getContacts();
-  console.log("root rootLoader", contacts);
+  console.log("root getContacts", contacts.length);
   return { contacts };
 }
 
 export default function Root() {
-  let data = useLoaderData();
-  if (!data) return redirect("/");
-  // if (!data)
-  //   data = [
-  //     {
-  //       id: "virachai",
-  //       first: "Virachai",
-  //       last: "Wongsena",
-  //       avatar: "https://virachai.github.io/profile-virachai.jpg",
-  //       twitter: "wvirachai",
-  //       notes: "JSD#8",
-  //       favorite: true,
-  //       createdAt: Date.now(),
-  //     },
-  //   ];
+  const data = useLoaderData();
+  if (data.isLoading) {
+    console.log("data.isLoading", data);
+    return <div>Loading...</div>;
+  }
+  if (data.isError) {
+    console.log("data.isError", data);
+    return <div>Error loading.</div>;
+  }
   const { contacts } = data;
+  if (!contacts) return <></>;
   return (
     <>
       <div id="sidebar">
@@ -92,7 +83,7 @@ export default function Root() {
           </ul>
           <hr />
           <br />
-          {contacts.length ? (
+          {contacts && contacts.length ? (
             <ul>
               {contacts.map((contact) => (
                 <li key={contact.id}>

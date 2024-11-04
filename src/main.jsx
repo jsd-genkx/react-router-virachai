@@ -10,13 +10,21 @@ import ErrorPage from "./error-page";
 import Root, {
   loader as rootLoader,
   action as rootAction,
+  clear as rootClear,
 } from "./routes/root";
 import Contact, { loader as contactLoader } from "./routes/contact";
-import {
-  deleteContactAll as clearFt,
-  // createContact as newFt,
-} from "./contacts";
+// import {
+//   deleteContactAll as clearFt,
+//   createContact as newFt,
+//   getContacts as getFt,
+// } from "./contacts";
 // import { getContacts } from "./contacts";
+
+// Define a loader function to fetch the posts
+// const fetchPosts = async () => {
+//   let contacts = await getFt();
+//   return { contacts };
+// };
 
 const router = createBrowserRouter([
   {
@@ -33,18 +41,23 @@ const router = createBrowserRouter([
         path: "contacts",
         element: <div>Click Menu!</div>,
       },
+
       {
         path: "contacts/new",
         element: <div>New</div>,
-        loader: rootAction,
+        loader: async ({ params, request }) => {
+          if ((await rootAction()) || params || request)
+            return redirect(`/?forceReload=${Date.now()}`);
+          return null;
+        },
       },
       {
         path: "contacts/clear",
         element: <div>clear</div>,
         loader: async ({ params, request }) => {
-          await clearFt();
-          console.log("clear");
-          if (params || request) return redirect("/");
+          if ((await rootClear()) || params || request)
+            return redirect(`/?forceReload=${Date.now()}`);
+          return null;
         },
       },
       {

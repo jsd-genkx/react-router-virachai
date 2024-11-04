@@ -13,21 +13,12 @@ Favorite.propTypes = {
 };
 
 export default function Contact() {
-  let { contact } = useLoaderData();
-  // if (!contact)
-  //   contact = {
-  //     first: "Your",
-  //     last: "Name",
-  //     avatar: "https://robohash.org/you.png?size=200x200",
-  //     twitter: "your_handle",
-  //     notes: "Some notes",
-  //     favorite: true,
-  //   };
+  const { contact } = useLoaderData();
   return (
     <div id="contact">
       <div>
         <img
-          key={contact.avatar}
+          key={contact.avatar || contact.id}
           src={
             contact.avatar ||
             `https://robohash.org/${contact.id}.png?size=200x200`
