@@ -16,7 +16,7 @@ export default function Contact() {
   const { contact } = useLoaderData();
   if (!contact) return <></>;
   return (
-    <div id="contact">
+    <div id="contact" className="min-w-[600px]">
       <div>
         <img
           key={contact.avatar || contact.id}
