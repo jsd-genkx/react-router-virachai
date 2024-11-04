@@ -8,7 +8,6 @@ import { useEffect } from "react";
 // import { useEffect, useState } from "react";
 // import { redirect } from "react-router-dom";
 
-
 // const handleClick = () => {
 //   navigate("/new-url", { state: { data: "someData" } });
 // };
@@ -41,6 +40,11 @@ export default function Root() {
     if (forceReload) {
       console.log("forceReload", forceReload);
       navigate("/");
+    }
+    const id = searchParams.get("id");
+    if (id) {
+      console.log("id", id);
+      navigate(`/contacts/${id}`);
     }
   }, [searchParams, navigate]);
   if (data.isLoading) {

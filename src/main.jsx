@@ -46,7 +46,9 @@ const router = createBrowserRouter([
         path: "contacts/new",
         element: <div>New</div>,
         loader: async ({ params, request }) => {
-          if ((await rootAction()) || params || request)
+          const { contact } = await rootAction();
+          if (contact && contact.id) return redirect(`/?id=${contact.id}`);
+          if (contact || params || request)
             return redirect(`/?forceReload=${Date.now()}`);
           return null;
         },
