@@ -1,11 +1,17 @@
 import { Outlet, Link, useLoaderData, Form } from "react-router-dom";
 import { Suspense } from "react";
 import { getContacts, createContact, deleteContactAll } from "../contacts";
+import { useSearchParams } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
-import { useLocation } from "react-router-dom";
+// import { useLocation } from "react-router-dom";
 import { useEffect } from "react";
 // import { useEffect, useState } from "react";
-import { redirect } from "react-router-dom";
+// import { redirect } from "react-router-dom";
+
+
+// const handleClick = () => {
+//   navigate("/new-url", { state: { data: "someData" } });
+// };
 
 export async function action() {
   const contact = await createContact();
@@ -27,6 +33,16 @@ export async function loader() {
 
 export default function Root() {
   const data = useLoaderData();
+  const [searchParams] = useSearchParams();
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    const forceReload = searchParams.get("forceReload");
+    if (forceReload) {
+      console.log("forceReload", forceReload);
+      navigate("/");
+    }
+  }, [searchParams, navigate]);
   if (data.isLoading) {
     console.log("data.isLoading", data);
     return <div>Loading...</div>;
